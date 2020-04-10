@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-@RepositoryRestResource(exported = false) //ta adnotacja powoduje, że AuthorRepository nie jest dostępna czyli nie ma url'i prowadzących do .../authors
+@RepositoryRestResource(exported = false) //ta adnotacja powoduje, że AuthorRepository nie jest dostępna czyli wszytkie url'e wynikające z tego interfejsu nie są dostępne
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
 }
