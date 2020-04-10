@@ -19,6 +19,17 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version //To ensure that the API client(s) aren’t using stale data, we can add a version to the Post and Author entities.
+    //// Then every time a record gets updated, hibernate will automatically increment the version counter with 1.
+    // //And the clients only need to update if the version has changed.
+    //To see this working, first re-run the app. Then in the terminal, run curl -H "Accept: application/json" -i http://localhost:8080/posts/1.
+    // You should see ETag: “0” at the top along with the Post’s data.
+    //Now we can do another GET, but instead only ask for results if the ETag is not 0 - curl -H "Accept: application/json" -H 'If-None-Match: "0"' -i http://localhost:8080/posts/1.
+    //This time, we get HTTP/1.1 304 Not Modified since the ETag is still 0.
+    private Long version;
+
+    @NotNull
+    @Size(min=4, max=100)
     private String title;
 
     @Column(length=1000000)
